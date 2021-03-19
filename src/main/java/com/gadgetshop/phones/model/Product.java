@@ -27,9 +27,7 @@ public abstract class Product {
 		@Column(name = "color")
 		private String _color;
 
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "specsId", referencedColumnName = "_prodId")
-		private Specifications _specs;
+
 
 		//Methods
 //		public Product(String modelName, String sku, String manufacturerName, String img, Double price, Specifications specs) {
@@ -51,14 +49,6 @@ public abstract class Product {
 
 		public void set_color(String _color) {
 				this._color = _color;
-		}
-
-		public Specifications get_specs() {
-				return _specs;
-		}
-
-		public void set_specs(Specifications _specs) {
-				this._specs = _specs;
 		}
 
 		public String get_img() {
