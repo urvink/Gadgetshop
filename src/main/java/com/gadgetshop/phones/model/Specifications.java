@@ -3,14 +3,12 @@ package com.gadgetshop.phones.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "specifications")
+@Table(name = "specs")
 public class Specifications {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Long specsId;
-
-		@Column(name = "os")
-		private String _os;
+		@Column(name = "id")
+		private Long _specsId;
 
 		@Column(name = "ram")
 		private Integer _ram;
@@ -24,15 +22,19 @@ public class Specifications {
 		@Column(name = "screenSize")
 		private String _screenSize;
 
-		@OneToOne(mappedBy = "products")
-		private Product product;
+		@OneToOne(mappedBy = "_specs")
+		private Phone _phone;
+
+		@OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "osId", referencedColumnName = "id")
+		private OperatingSystem _os;
 
 		//Method
-		public String get_os() {
+		public OperatingSystem get_os() {
 				return _os;
 		}
 
-		public void set_os(String _os) {
+		public void set_os(OperatingSystem _os) {
 				this._os = _os;
 		}
 
@@ -66,5 +68,21 @@ public class Specifications {
 
 		public void set_screenSize(String _screenSize) {
 				this._screenSize = _screenSize;
+		}
+
+		public Long get_specsId() {
+				return _specsId;
+		}
+
+		public void set_specsId(Long _specsId) {
+				this._specsId = _specsId;
+		}
+
+		public Phone get_phone() {
+				return _phone;
+		}
+
+		public void set_phone(Phone _phone) {
+				this._phone = _phone;
 		}
 }
