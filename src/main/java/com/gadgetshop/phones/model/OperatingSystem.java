@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "os")
 public class OperatingSystem {
+		//Properties
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id")
@@ -19,8 +20,10 @@ public class OperatingSystem {
 		@Column(name = "os maker")
 		private String _osCreatorName;
 
-		@OneToOne(mappedBy = "_os")
-		private Specifications specs;
+		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+		private Specifications _specs;
+
+		//Methods
 
 		public Long get_osId() {
 				return _osId;
@@ -54,11 +57,11 @@ public class OperatingSystem {
 				this._osCreatorName = _osCreatorName;
 		}
 
-		public Specifications getSpecs() {
-				return specs;
+		public Specifications get_specs() {
+				return _specs;
 		}
 
-		public void setSpecs(Specifications specs) {
-				this.specs = specs;
+		public void set_specs(Specifications _specs) {
+				this._specs = _specs;
 		}
 }

@@ -33,11 +33,20 @@ public class Phone{
 		@Column(name = "color")
 		private String _color;
 
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "specsId", referencedColumnName = "id")
+		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 		private Specifications _specs;
 
 		public Phone() {
+		}
+
+		public Phone(String name, String modelName, String sku, String manufacturerName, String img, Double price, String color) {
+				this._name = name;
+				this._modelName = modelName;
+				this._sku = sku;
+				this._manufacturerName = manufacturerName;
+				this._img = img;
+				this._price = price;
+				this._color = color;
 		}
 
 		public Long get_phoneId() {

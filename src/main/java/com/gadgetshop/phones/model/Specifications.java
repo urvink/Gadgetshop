@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "specs")
 public class Specifications {
+		//Properties
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "id")
@@ -22,14 +23,13 @@ public class Specifications {
 		@Column(name = "screenSize")
 		private String _screenSize;
 
-		@OneToOne(mappedBy = "_specs")
+		@OneToOne(mappedBy = "_specs", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 		private Phone _phone;
 
-		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "osId", referencedColumnName = "id")
+		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false, mappedBy = "_specs")
 		private OperatingSystem _os;
 
-		//Method
+		//Methods
 		public OperatingSystem get_os() {
 				return _os;
 		}
@@ -42,9 +42,7 @@ public class Specifications {
 				return _ram;
 		}
 
-		public void set_ram(Integer _ram) {
-				this._ram = _ram;
-		}
+		public void set_ram(Integer _ram) {	this._ram = _ram;	}
 
 		public Integer get_rom() {
 				return _rom;

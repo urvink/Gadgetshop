@@ -23,12 +23,6 @@ public class PhoneRepositoryTest {
 		@Autowired
 		private PhoneRepository repo;
 
-		@Autowired
-		private SpecificationsRepository specsRepo;
-
-		@Autowired
-		private OperatingSystemRepository osRepo;
-
 //		@Test
 //		public void testCreatOs(){
 //				OperatingSystem os = new OperatingSystem();
@@ -49,18 +43,6 @@ public class PhoneRepositoryTest {
 				OperatingSystem os = new OperatingSystem();
 				Specifications specs = new Specifications();
 
-				//Specs
-				specs.set_ram(8);
-				specs.set_rom(128);
-				specs.set_soc("A13 Bionic (7 nm+)");
-				specs.set_screenSize("1700x900");
-				specs.set_os(os);
-
-				//Os
-				os.set_osVersion(13.0);
-				os.set_osName("iOS 13");
-				os.set_osCreatorName("Apple");
-
 				phone.set_name("IPHONE11 128GB Black");
 				phone.set_price(6.77);
 				phone.set_sku("ert");
@@ -68,7 +50,22 @@ public class PhoneRepositoryTest {
 				phone.set_manufacturerName("Apple");
 				phone.set_modelName("Iphone 11");
 				phone.set_color("Black");
+
+
+				//Specs
+				specs.set_ram(8);
+				specs.set_rom(128);
+				specs.set_soc("A13 Bionic (7 nm+)");
+				specs.set_screenSize("1700x900");
+
 				phone.set_specs(specs);
+
+				//Os
+				os.set_osVersion(13.0);
+				os.set_osName("iOS 13");
+				os.set_osCreatorName("Apple");
+
+				specs.set_os(os);
 
 				Phone savedPhone = repo.save(phone);
 
