@@ -23,20 +23,6 @@ public class PhoneRepositoryTest {
 		@Autowired
 		private PhoneRepository repo;
 
-//		@Test
-//		public void testCreatOs(){
-//				OperatingSystem os = new OperatingSystem();
-//				//Os
-//				os.set_osVersion(13.0);
-//				os.set_osName("iOS 13");
-//				os.set_osCreatorName("Apple");
-//
-//				OperatingSystem savedOs = osRepo.save(os);
-//
-//				OperatingSystem existOs = entityManager.find(OperatingSystem.class, savedOs.get_osId());
-//
-//				assertThat(os.get_osId()).isEqualTo(existOs.get_osId());
-//		}
 		@Test
 		public void testCreatePhone(){
 				Phone phone = new Phone();
@@ -51,22 +37,24 @@ public class PhoneRepositoryTest {
 				phone.set_modelName("Iphone 11");
 				phone.set_color("Black");
 
-
 				//Specs
 				specs.set_ram(8);
 				specs.set_rom(128);
 				specs.set_soc("A13 Bionic (7 nm+)");
 				specs.set_screenSize("1700x900");
 
-				phone.set_specs(specs);
+				System.out.println(specs.toString());
+
 
 				//Os
 				os.set_osVersion(13.0);
 				os.set_osName("iOS 13");
 				os.set_osCreatorName("Apple");
 
-				specs.set_os(os);
+				System.out.println(os.toString());
 
+				specs.set_os(os);
+				phone.set_specs(specs);
 				Phone savedPhone = repo.save(phone);
 
 				Phone existPhone = entityManager.find(Phone.class, savedPhone.get_phoneId());

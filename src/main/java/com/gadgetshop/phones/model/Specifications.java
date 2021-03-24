@@ -23,26 +23,33 @@ public class Specifications {
 		@Column(name = "screenSize")
 		private String _screenSize;
 
-		@OneToOne(mappedBy = "_specs", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+		@OneToOne(cascade = CascadeType.ALL)
 		private Phone _phone;
 
-		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false, mappedBy = "_specs")
+		@OneToOne(cascade = CascadeType.ALL)
 		private OperatingSystem _os;
 
 		//Methods
-		public OperatingSystem get_os() {
-				return _os;
+
+
+		public Specifications() {
 		}
 
-		public void set_os(OperatingSystem _os) {
-				this._os = _os;
+		public Long get_specsId() {
+				return _specsId;
+		}
+
+		public void set_specsId(Long _specsId) {
+				this._specsId = _specsId;
 		}
 
 		public Integer get_ram() {
 				return _ram;
 		}
 
-		public void set_ram(Integer _ram) {	this._ram = _ram;	}
+		public void set_ram(Integer _ram) {
+				this._ram = _ram;
+		}
 
 		public Integer get_rom() {
 				return _rom;
@@ -68,19 +75,19 @@ public class Specifications {
 				this._screenSize = _screenSize;
 		}
 
-		public Long get_specsId() {
-				return _specsId;
-		}
-
-		public void set_specsId(Long _specsId) {
-				this._specsId = _specsId;
-		}
-
 		public Phone get_phone() {
 				return _phone;
 		}
 
 		public void set_phone(Phone _phone) {
 				this._phone = _phone;
+		}
+
+		public OperatingSystem get_os() {
+				return _os;
+		}
+
+		public void set_os(OperatingSystem _os) {
+				this._os = _os;
 		}
 }

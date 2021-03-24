@@ -20,10 +20,12 @@ public class OperatingSystem {
 		@Column(name = "os maker")
 		private String _osCreatorName;
 
-		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+		@OneToOne(cascade = CascadeType.ALL, mappedBy = "_os")
 		private Specifications _specs;
 
 		//Methods
+		public OperatingSystem() {
+		}
 
 		public Long get_osId() {
 				return _osId;

@@ -33,7 +33,7 @@ public class Phone{
 		@Column(name = "color")
 		private String _color;
 
-		@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+		@OneToOne(cascade = CascadeType.ALL)
 		private Specifications _specs;
 
 		public Phone() {
