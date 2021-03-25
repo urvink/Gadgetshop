@@ -25,7 +25,7 @@ public class Specifications {
 		@Column(name = "screenSize")
 		private String _screenSize;
 
-		@OneToOne(cascade = CascadeType.ALL, mappedBy = "specs")
+		@OneToOne(cascade = CascadeType.ALL)
 		private Phone phone;
 
 		@OneToOne(cascade = CascadeType.ALL)

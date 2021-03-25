@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Gadget Shop | Spring Boot eindopdracht</title>
 </head>
 <body>
-    <header><h2>Header CONTENT</h2></header>
-    <main>
-        <div>
-            <h1>GadgetShop | Phones</h1>
+<header><h2>Come see and behold</h2></header>
+<main>
+    <h1>GadgetShop | Phones</h1>
+    <section>
+        <h2>Product Overview</h2>
+        <div class="phones">
+            <th:block th:each="phone:${phones}">
+                <div class="phone" th:text="${phone}"></div>
+            </th:block>
         </div>
-    </main>
+    </section>
+
+</main>
     <footer><h3>Footer CONTENT</h3></footer>
 </body>
 </html>
