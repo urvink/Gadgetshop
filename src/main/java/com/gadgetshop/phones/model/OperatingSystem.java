@@ -1,5 +1,7 @@
 package com.gadgetshop.phones.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,16 +13,17 @@ public class OperatingSystem {
 		@Column(name = "id")
 		private Long _osId;
 
-		@Column(name = "os name")
+		@Column(name = "osName")
 		private String _osName;
 
-		@Column(name = "os version")
+		@Column(name = "osVersion")
 		private Double _osVersion;
 
-		@Column(name = "os maker")
+		@Column(name = "osMaker")
 		private String _osCreatorName;
 
-		@OneToOne(cascade = CascadeType.ALL, mappedBy = "_os")
+		@OneToOne(mappedBy = "os", cascade = CascadeType.ALL)
+		@JsonManagedReference
 		private Specifications _specs;
 
 		//Methods

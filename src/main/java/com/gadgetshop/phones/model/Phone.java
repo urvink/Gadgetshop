@@ -33,8 +33,16 @@ public class Phone{
 		@Column(name = "color")
 		private String _color;
 
+		@Column(name = "amountInStock")
+		private Integer _stockAmount;
+
 		@OneToOne(cascade = CascadeType.ALL)
-		private Specifications _specs;
+		@JoinColumn(name = "specsId", referencedColumnName = "id")
+		private Specifications specs;
+
+//		@OneToOne(cascade = CascadeType.ALL, mappedBy = "phone")
+//		@PrimaryKeyJoinColumn
+//		private Stock stock;
 
 		public Phone() {
 		}
@@ -113,12 +121,19 @@ public class Phone{
 				this._color = _color;
 		}
 
-		public void set_specs(Specifications _specs) {
-				this._specs = _specs;
+		public Integer get_stockAmount() {
+				return _stockAmount;
 		}
 
-		public Specifications get_specs() {
-				return _specs;
+		public void set_stockAmount(Integer _stockAmount) {
+				this._stockAmount = _stockAmount;
 		}
 
+		public Specifications getSpecs() {
+				return specs;
+		}
+
+		public void setSpecs(Specifications specs) {
+				this.specs = specs;
+		}
 }

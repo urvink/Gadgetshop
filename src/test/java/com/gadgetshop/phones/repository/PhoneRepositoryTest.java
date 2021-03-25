@@ -29,13 +29,14 @@ public class PhoneRepositoryTest {
 				OperatingSystem os = new OperatingSystem();
 				Specifications specs = new Specifications();
 
-				phone.set_name("IPHONE11 128GB Black");
+				phone.set_name("Android 128GB Black");
 				phone.set_price(6.77);
 				phone.set_sku("ert");
 				phone.set_img("https://www.tele2.nl/Consumer/media/images/_mobiel/alle-telefoons/apple/iphone-11/shop/black/dvi-front-back_Iphone11_Zwart_305x450.png");
 				phone.set_manufacturerName("Apple");
 				phone.set_modelName("Iphone 11");
 				phone.set_color("Black");
+				phone.set_stockAmount(23);
 
 				//Specs
 				specs.set_ram(8);
@@ -43,18 +44,13 @@ public class PhoneRepositoryTest {
 				specs.set_soc("A13 Bionic (7 nm+)");
 				specs.set_screenSize("1700x900");
 
-				System.out.println(specs.toString());
-
-
 				//Os
 				os.set_osVersion(13.0);
 				os.set_osName("iOS 13");
 				os.set_osCreatorName("Apple");
 
-				System.out.println(os.toString());
-
-				specs.set_os(os);
-				phone.set_specs(specs);
+				specs.setOs(os);
+				phone.setSpecs(specs);
 				Phone savedPhone = repo.save(phone);
 
 				Phone existPhone = entityManager.find(Phone.class, savedPhone.get_phoneId());
