@@ -1,24 +1,18 @@
 package com.gadgetshop.phones.model;
 
 import javax.persistence.*;
-
-@Entity
+@Embeddable
 @Table(name = "stock")
 public class Stock {
 		@Id
-		@Column(name = "phoneId")
+		@OneToOne(cascade = CascadeType.ALL)
+//		@MapsId
 		private Long _id;
 
 		@Column(name = "amount")
 		private Integer _stockAmount;
 
-		@OneToOne
-		@MapsId
-		@JoinColumn(name = "phoneId")
-		private Phone phone;
-
 		//Methods
-
 		public Stock() {
 		}
 
@@ -38,11 +32,11 @@ public class Stock {
 				this._stockAmount = _stockAmount;
 		}
 
-		public Phone getPhone() {
-				return phone;
-		}
-
-		public void setPhone(Phone phone) {
-				this.phone = phone;
-		}
+//		public Phone getPhone() {
+//				return phone;
+//		}
+//
+//		public void setPhone(Phone phone) {
+//				this.phone = phone;
+//		}
 }

@@ -29,9 +29,6 @@ public class PhoneRepositoryTest {
 				OperatingSystem os = new OperatingSystem();
 				Specifications specs = new Specifications();
 
-				specs.setOs(os);
-				phone.setSpecs(specs);
-
 				phone.set_name("TEST");
 				phone.set_price(6.77);
 				phone.set_sku("ert");
@@ -52,8 +49,8 @@ public class PhoneRepositoryTest {
 				os.set_osName("iOS 13");
 				os.set_osCreatorName("Apple");
 
-				specs.setOs(os);
 				phone.setSpecs(specs);
+				specs.setOs(os);
 
 				Phone savedPhone = repo.save(phone);
 

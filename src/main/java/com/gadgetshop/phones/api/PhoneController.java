@@ -5,7 +5,6 @@ import com.gadgetshop.phones.model.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,7 @@ public class PhoneController {
 		@Autowired
 		private PhoneService service;
 
+
 		/*
 		@GetMapping("/test")
 		public String showTestPage(Model model){
@@ -29,23 +29,26 @@ public class PhoneController {
 				return "test";
 		}*/
 
-		@GetMapping("/phones")
-		public ResponseEntity<List<Phone>> getAllPhones(Model model, HttpServletRequest request) {
+		/**
+		 * GET SECTION
+		 * ------------
+		 *
+		 * @param request
+		 * @return ResponseEntity<List < Phone>>
+		 */
+		@GetMapping(path = "/phones")
+		public ResponseEntity<List<Phone>> getAllPhones(HttpServletRequest request) {
 				try {
 						List<Phone> phonesList = service.findAll();
-						if (phonesList.isEmpty()) {
-//						service.findAll().forEach(phonesList::add);
-								return new ResponseEntity(phonesList, HttpStatus.OK);
-						} else {
-								return new ResponseEntity("Nothing found", HttpStatus.NO_CONTENT);
-						}
 
+//						service.findAll().forEach(phonesList::add);
+						return new ResponseEntity(phonesList, HttpStatus.OK);
 				} catch (Exception e) {
 						return new ResponseEntity("OOOPS", HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
-		@GetMapping("/phones/{id}")
+		@GetMapping(path = "/phones/{id}")
 		public ResponseEntity<Phone> getPhoneDetails(@PathVariable Long id) {
 				try {
 						Optional<Phone> phoneDetails = service.findById(id);
@@ -59,9 +62,77 @@ public class PhoneController {
 				}
 		}
 
-		@PutMapping(value = "/phones/{id}", consumes = "application/json", produces = "application/json")
+		/**
+		 * -----------
+		 * PUT SECTION
+		 * -----------
+		 * CREATE NEW PHONE!!
+		 * |-----------------|
+		 *
+		 * @param newPhoneData
+		 * @return ResponseEntity
+		 * <p>
+		 * TODO: Make it modular!!
+		 */
+		@PutMapping(path = "/phones", consumes = "application/json", produces = "application/json")
+		public ResponseEntity<Phone> createPhone(@RequestBody Phone newPhoneData) {
+				try {
+						Phone savedPhone = service.createNewPhone(newPhoneData);
+						return new ResponseEntity(savedPhone, HttpStatus.CREATED);
+				} catch (Exception e) {
+						return new ResponseEntity("Unable to create resource", HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+		}
+
+		/**
+		 * UPDATE PHONE
+		 * |-------------|
+		 * TODO: Make it modular!!
+		 *
+		 * @param id
+		 * @param data
+		 * @param request
+		 * @return
+		 */
+		@PutMapping(path = "/phones/{id}", consumes = "application/json", produces = "application/json")
 		public ResponseEntity<Phone> updatePhone(@PathVariable Long id, @RequestBody Phone data, HttpServletRequest request) {
-				String putData = data.get_img();
-				return new ResponseEntity(putData, HttpStatus.OK);
+
+				try {
+						Optional<Phone> existedPhone = service.findById(id);
+						if (existedPhone != null) {
+
+						} else {
+								return new ResponseEntity<>("Duuude, where is my phone", HttpStatus.NO_CONTENT);
+						}
+
+						String putData = data.get_img();
+						return new ResponseEntity(putData, HttpStatus.OK);
+				} catch (Exception e) {
+						return new ResponseEntity("OOOPS....something went HORRIBLY wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+		}
+
+		/**
+		 * DELETE SECTION
+		 * ---------------
+		 *
+		 * @param id - Long
+		 * @return ResponseEntity
+		 */
+		@DeleteMapping(value = "/phones/{id}")
+		public ResponseEntity deletePhone(@PathVariable Long id) {
+				Optional<Phone> existPhone = service.findById(id);
+				try {
+						if (existPhone != null) {
+								service.deleteById(id);
+						} else {
+								return new ResponseEntity("Uhhh....dude! Where's my phone", HttpStatus.NO_CONTENT);
+						}
+						return new ResponseEntity("Phone is SUCCESSfully DELETED!", HttpStatus.OK);
+				} catch (Exception e) {
+						return new ResponseEntity("OOPS.....Something went SERIOUSLY wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+
+
 		}
 }

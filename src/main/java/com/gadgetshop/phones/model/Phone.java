@@ -37,7 +37,6 @@ public class Phone{
 		private Integer _stockAmount;
 
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "specsId", referencedColumnName = "id")
 		private Specifications specs;
 
 //		@OneToOne(cascade = CascadeType.ALL, mappedBy = "phone")

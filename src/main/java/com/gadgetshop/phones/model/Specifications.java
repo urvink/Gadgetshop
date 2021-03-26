@@ -1,7 +1,5 @@
 package com.gadgetshop.phones.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 @Entity
@@ -25,12 +23,11 @@ public class Specifications {
 		@Column(name = "screenSize")
 		private String _screenSize;
 
-		@OneToOne(cascade = CascadeType.ALL)
-		private Phone phone;
+//		@OneToOne(cascade = CascadeType.ALL)
+//		private Phone phone;
 
 		@OneToOne(cascade = CascadeType.ALL)
-		@JoinColumn(name = "_osId", referencedColumnName = "id")
-		@JsonBackReference
+//		@JsonBackReference
 		private OperatingSystem os;
 
 		//Methods
@@ -77,13 +74,13 @@ public class Specifications {
 				this._screenSize = _screenSize;
 		}
 
-		public Phone get_phone() {
-				return phone;
-		}
-
-		public void set_phone(Phone phone) {
-				this.phone = phone;
-		}
+//		public Phone get_phone() {
+//				return phone;
+//		}
+//
+//		public void set_phone(Phone phone) {
+//				this.phone = phone;
+//		}
 
 		public OperatingSystem getOs() {
 				return os;

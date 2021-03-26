@@ -25,4 +25,8 @@ public class PhoneService {
 				repo.deleteById(dLong);
 		}
 
+		public Phone createNewPhone(Phone newPhone) {
+				return repo.save(newPhone);
+		}
+
 }
