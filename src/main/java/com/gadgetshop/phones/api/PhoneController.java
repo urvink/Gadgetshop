@@ -2,6 +2,7 @@ package com.gadgetshop.phones.api;
 
 import com.gadgetshop.phones.Service.PhoneService;
 import com.gadgetshop.phones.model.Phone;
+import com.gadgetshop.phones.utils.StatusMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import java.util.Optional;
 public class PhoneController {
 		@Autowired
 		private PhoneService service;
-
 
 		/*
 		@GetMapping("/test")
@@ -44,7 +44,7 @@ public class PhoneController {
 //						service.findAll().forEach(phonesList::add);
 						return new ResponseEntity(phonesList, HttpStatus.OK);
 				} catch (Exception e) {
-						return new ResponseEntity("OOOPS", HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
@@ -58,7 +58,7 @@ public class PhoneController {
 								return new ResponseEntity("No phones were found", HttpStatus.NO_CONTENT);
 						}
 				} catch (Exception e) {
-						return new ResponseEntity("Server is unavailable", HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
@@ -75,12 +75,16 @@ public class PhoneController {
 		 * TODO: Make it modular!!
 		 */
 		@PutMapping(path = "/phones", consumes = "application/json", produces = "application/json")
-		public ResponseEntity<Phone> createPhone(@RequestBody Phone newPhoneData) {
+		public ResponseEntity<Phone> createPhone(@RequestHeader(value = "Content-Type") String contentType, @RequestBody Phone newPhoneData) {
 				try {
-						Phone savedPhone = service.createNewPhone(newPhoneData);
-						return new ResponseEntity(savedPhone, HttpStatus.CREATED);
+						if ((contentType != null) && (contentType.equals("application/json"))) {
+								Phone savedPhone = service.createNewPhone(newPhoneData);
+								return new ResponseEntity(savedPhone, HttpStatus.CREATED);
+						} else {
+								return new ResponseEntity("Only application/json accepted", HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+						}
 				} catch (Exception e) {
-						return new ResponseEntity("Unable to create resource", HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
@@ -90,25 +94,25 @@ public class PhoneController {
 		 * TODO: Make it modular!!
 		 *
 		 * @param id
-		 * @param data
+		 * @param newPhoneData
 		 * @param request
 		 * @return
 		 */
 		@PutMapping(path = "/phones/{id}", consumes = "application/json", produces = "application/json")
-		public ResponseEntity<Phone> updatePhone(@PathVariable Long id, @RequestBody Phone data, HttpServletRequest request) {
-
+		public ResponseEntity<Phone> updatePhone(@PathVariable Long id, @RequestBody Phone newPhoneData, HttpServletRequest request) {
 				try {
+						String headers = request.getContentType();
+
 						Optional<Phone> existedPhone = service.findById(id);
+
 						if (existedPhone != null) {
-
+								Phone updatedPhone = service.updatePhoneDetails(newPhoneData);
+								return new ResponseEntity(updatedPhone, HttpStatus.OK);
 						} else {
-								return new ResponseEntity<>("Duuude, where is my phone", HttpStatus.NO_CONTENT);
+								return new ResponseEntity("Duuude, where is my phone", HttpStatus.NO_CONTENT);
 						}
-
-						String putData = data.get_img();
-						return new ResponseEntity(putData, HttpStatus.OK);
 				} catch (Exception e) {
-						return new ResponseEntity("OOOPS....something went HORRIBLY wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
@@ -120,7 +124,7 @@ public class PhoneController {
 		 * @return ResponseEntity
 		 */
 		@DeleteMapping(value = "/phones/{id}")
-		public ResponseEntity deletePhone(@PathVariable Long id) {
+		public ResponseEntity deletePhone(@PathVariable Long id, HttpServletRequest request) {
 				Optional<Phone> existPhone = service.findById(id);
 				try {
 						if (existPhone != null) {
@@ -130,9 +134,17 @@ public class PhoneController {
 						}
 						return new ResponseEntity("Phone is SUCCESSfully DELETED!", HttpStatus.OK);
 				} catch (Exception e) {
-						return new ResponseEntity("OOPS.....Something went SERIOUSLY wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
+		}
 
+		@DeleteMapping(path = "/phones/")
+		public ResponseEntity batchDelete(@RequestBody List<Long> ids, HttpServletRequest request) {
+				try {
+						return new ResponseEntity(ids, HttpStatus.OK);
 
+				} catch (Exception e) {
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
 		}
 }

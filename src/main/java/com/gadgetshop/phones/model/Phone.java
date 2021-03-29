@@ -41,20 +41,20 @@ public class Phone{
 
 //		@OneToOne(cascade = CascadeType.ALL, mappedBy = "phone")
 //		@PrimaryKeyJoinColumn
-//		private Stock stock;
+//		private Stock stockAmount;
 
 		public Phone() {
 		}
 
-		public Phone(String name, String modelName, String sku, String manufacturerName, String img, Double price, String color) {
-				this._name = name;
-				this._modelName = modelName;
-				this._sku = sku;
-				this._manufacturerName = manufacturerName;
-				this._img = img;
-				this._price = price;
-				this._color = color;
-		}
+//		public Phone(String name, String modelName, String sku, String manufacturerName, String img, Double price, String color) {
+//				this._name = name;
+//				this._modelName = modelName;
+//				this._sku = sku;
+//				this._manufacturerName = manufacturerName;
+//				this._img = img;
+//				this._price = price;
+//				this._color = color;
+//		}
 
 		public Long get_phoneId() {
 				return _phoneId;
@@ -107,6 +107,14 @@ public class Phone{
 		public Double get_price() {
 				return _price;
 		}
+
+//		public Stock getStockAmount() {
+//				return stockAmount;
+//		}
+//
+//		public void setStockAmount(Stock stockAmount) {
+//				this.stockAmount = stockAmount;
+//		}
 
 		public void set_price(Double _price) {
 				this._price = _price;

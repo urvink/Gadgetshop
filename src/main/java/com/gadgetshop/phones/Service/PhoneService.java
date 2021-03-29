@@ -25,8 +25,16 @@ public class PhoneService {
 				repo.deleteById(dLong);
 		}
 
+		public void deleteByIds(List<Long> ids) {
+				repo.deleteAllByIdInBatch(ids);
+		}
+
 		public Phone createNewPhone(Phone newPhone) {
 				return repo.save(newPhone);
+		}
+
+		public Phone updatePhoneDetails(Phone phoneData) {
+				return repo.save(phoneData);
 		}
 
 }

@@ -36,7 +36,7 @@ public class PhoneRepositoryTest {
 				phone.set_manufacturerName("Apple");
 				phone.set_modelName("HUP 11");
 				phone.set_color("Black");
-				phone.set_stockAmount(23);
+//				phone.set_stockAmount(23);
 
 				//Specs
 				specs.set_ram(8);
