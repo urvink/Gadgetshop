@@ -2,6 +2,7 @@ package com.gadgetshop.phones.api;
 
 import com.gadgetshop.phones.Service.PhoneService;
 import com.gadgetshop.phones.model.Phone;
+import com.gadgetshop.phones.model.mutatePhoneStock;
 import com.gadgetshop.phones.utils.StatusMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -111,6 +112,27 @@ public class PhoneController {
 						} else {
 								return new ResponseEntity("Duuude, where is my phone", HttpStatus.NO_CONTENT);
 						}
+				} catch (Exception e) {
+						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+		}
+
+		@PutMapping(path = "/phones/{id}/mutate", consumes = "application/json", produces = "application/json")
+		public ResponseEntity<Phone> mutateStock(@PathVariable Long id, @RequestBody mutatePhoneStock mutation, HttpServletRequest request) {
+				try {
+						Optional<Phone> phoneData = service.findById(id);
+						Integer currentStock = phoneData.get().get_stockAmount();
+						switch (mutation.getType()) {
+								case "replenish":
+										currentStock = currentStock + mutation.getStockAmount();
+										break;
+								default:
+										currentStock = currentStock - mutation.getStockAmount();
+						}
+						phoneData.get().set_stockAmount(currentStock);
+						Phone newUpdatedPhoneData = service.updatePhoneDetails(phoneData.get());
+						System.out.println(phoneData.get().get_stockAmount());
+						return new ResponseEntity(newUpdatedPhoneData, HttpStatus.OK);
 				} catch (Exception e) {
 						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
