@@ -7,6 +7,7 @@ import com.gadgetshop.phones.utils.StatusMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/phones")
 public class PhoneController {
 		@Autowired
 		private PhoneService service;
@@ -37,19 +38,40 @@ public class PhoneController {
 		 * @param request
 		 * @return ResponseEntity<List < Phone>>
 		 */
-		@GetMapping(path = "/phones")
-		public ResponseEntity<List<Phone>> getAllPhones(HttpServletRequest request) {
+		@GetMapping
+		public ResponseEntity<List<Phone>> getAllPhones(HttpServletRequest request, Model model) {
 				try {
 						List<Phone> phonesList = service.findAll();
 
 //						service.findAll().forEach(phonesList::add);
-						return new ResponseEntity(phonesList, HttpStatus.OK);
+						model.addAttribute("phones", phonesList);
+						return new ResponseEntity(model, HttpStatus.OK);
 				} catch (Exception e) {
 						return new ResponseEntity(StatusMessages.error500, HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 		}
 
-		@GetMapping(path = "/phones/{id}")
+		//Thymeleaf FRIENDLY
+//		@GetMapping
+//		public String getAllPhones(Model model){
+//				try{
+//
+//
+//				List<Phone> allPhones = service.findAll();
+//
+//				if (allPhones!= null){
+//						model.addAttribute(allPhones);
+//
+//				}else{
+//						return StatusMessages.error404;
+//				}
+//				}catch (Exception e){
+//						return StatusMessages.error500;
+//				}
+//				return "index";
+//		}
+
+		@GetMapping
 		public ResponseEntity<Phone> getPhoneDetails(@PathVariable Long id) {
 				try {
 						Optional<Phone> phoneDetails = service.findById(id);
